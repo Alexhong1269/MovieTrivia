@@ -31,6 +31,16 @@ const StyledHome = styled.main`
   .triviaLogo {
     width: 300px;
     height: 300px;
+    animation: spin 10s infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
 
@@ -39,7 +49,6 @@ function Home() {
     <StyledHome>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
-        <p>Movie Trivia</p>
       </div>
     </StyledHome>
   );
