@@ -6,6 +6,17 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
+  const [data, setData] = react.useState(null);
+
+  React.useEffect(() => {
+    fetch("/api")
+      .then((res) => res.json())
+      //fetching data from the json folder that connceted to index.cjs
+      .then((data) => setData(data.message));
+  }, []);
+
+  //theres suppose to be a display return but im not writting all that
+
   return (
     <>
       <div>
