@@ -29,8 +29,8 @@ const StyledHome = styled.main`
   }
 
   .triviaLogo {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
     animation: spin 10s infinite;
   }
 
@@ -38,8 +38,23 @@ const StyledHome = styled.main`
     0% {
       transform: rotate(0deg);
     }
+    50% {
+      transform: rotate(180deg);
+    }
     100% {
       transform: rotate(360deg);
+    }
+  }
+
+  .button_container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      background-color: black;
+      color: white;
+      margin: 10px;
     }
   }
 `;
@@ -49,6 +64,10 @@ function Home() {
     <StyledHome>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
+        <div className="button_container">
+          <button>Sign Up</button>
+          <button>Already a user?</button>
+        </div>
       </div>
     </StyledHome>
   );
