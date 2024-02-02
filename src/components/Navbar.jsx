@@ -44,17 +44,17 @@ function NavBar() {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/about" className="link">
-            about
+            How to play
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/projects" className="link">
-            projects
+            Leaderboard
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/contact" className="link">
-            contact
+            About Us
           </Nav.Link>
         </Nav.Item>
       </Nav>
