@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import bgImg from "../images/home_background.jpg";
+import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 
 const StyledHome = styled.main`
   box-sizing: border-box;
-  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)),
-    url(${bgImg});
+  background: url(${bgImg});
   height: 100vh;
   width: 100vw;
   background-position: center;
@@ -50,12 +49,22 @@ const StyledHome = styled.main`
     margin-top: 30px;
     display: flex;
     flex-direction: column;
-
-    button {
-      background-color: black;
-      color: white;
-      margin: 10px;
-    }
+  }
+  button {
+    background: black;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
+    width: 300px;
+  }
+  button: hover {
+    background-color: gainsboro;
+    color: black;
+    transition: all 0.5s ease;
+  }
+  h1 {
+    color: white;
+    margin-bottom: 20px;
   }
 `;
 
@@ -63,6 +72,7 @@ function Home() {
   return (
     <StyledHome>
       <div className="logo_container">
+        <h1>Movie Trivia</h1>
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <div className="button_container">
           <button>Sign Up</button>
