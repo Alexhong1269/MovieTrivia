@@ -39,21 +39,21 @@ function NavBar() {
       <Nav className="nav">
         <Nav.Item>
           <Nav.Link href="/">
-            <img src={triviaLogo} alt="wook-icon" className="triviaLogo" />
+            <img src={triviaLogo} alt="trivia_icon" className="triviaLogo" />
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/about" className="link">
+          <Nav.Link href="/howtoplay" className="link">
             How to play
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/projects" className="link">
+          <Nav.Link href="/leaderboard" className="link">
             Leaderboard
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/contact" className="link">
+          <Nav.Link href="/aboutus" className="link">
             About Us
           </Nav.Link>
         </Nav.Item>
