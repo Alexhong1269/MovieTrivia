@@ -56,7 +56,7 @@ const StyledHome = styled.main`
   }
 
   .signup,
-  .signin {
+  .login {
     padding: 10px;
     color: white;
     margin: 5px;
@@ -71,7 +71,7 @@ const StyledHome = styled.main`
     color: black;
     transition: all 0.5s ease;
   }
-  .signin: hover {
+  .login: hover {
     background-color: white;
     color: black;
     transition: all 0.5s ease;
@@ -94,7 +94,7 @@ function Home({ isHidden }) {
           <Link to="/register" className="signup">
             Sign Up
           </Link>
-          <Link to="/signin" className="signin">
+          <Link to="/login" className="login">
             Already a user?
           </Link>
         </div>
