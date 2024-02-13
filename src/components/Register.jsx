@@ -10,8 +10,8 @@ const StyledRegister = styled.main`
   width: 100vw;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;  
-  
+  background-size: cover;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -57,37 +57,41 @@ const StyledRegister = styled.main`
     flex-direction: column;
   }
 
-  .MemberText{
+  .MemberText {
     text-align: center;
     margin-top: 40px;
   }
 `;
 
 function Register() {
-    return (
-      <StyledRegister>
-        <div className="logo_container">
+  return (
+    <StyledRegister>
+      <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
-          <h1>Movie Trivia</h1>
-          <form>
-            <div>
-                <label htmlFor = "username" id = "UserText">Enter a Username:</label>
-                <br></br>
-                <input type = "text" id = "username" name = "username" />
-            </div>
-            <div>
-                <label htmlFor = "password" id = "PasswordText">Enter a Password:</label>
-                <br></br>
-                <input type = "text" id = "password" name = "password" />
-            </div>
-            <div className="button_container">
-                <button>Create Account</button>
-            </div>
-            <p className = "MemberText" >Already A Member?</p>
-          </form>
-        </div>
-      </StyledRegister>
-    );
+        <h1>Movie Trivia</h1>
+        <form>
+          <div>
+            <label htmlFor="username" id="UserText">
+              Enter a Username:
+            </label>
+            <br></br>
+            <input type="text" id="username" name="username" />
+          </div>
+          <div>
+            <label htmlFor="password" id="PasswordText">
+              Enter a Password:
+            </label>
+            <br></br>
+            <input type="text" id="password" name="password" required />
+          </div>
+          <div className="button_container">
+            <button>Create Account</button>
+          </div>
+          <p className="MemberText">Already A Member?</p>
+        </form>
+      </div>
+    </StyledRegister>
+  );
 }
 
 export default Register;
