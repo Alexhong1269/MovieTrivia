@@ -32,6 +32,7 @@ const StyledHome = styled.main`
     width: 250px;
     height: 250px;
     animation: spin 10s infinite;
+    z-index: ${(props) => (props.isHidden ? "-1" : "0")};
   }
 
   @keyframes spin {
@@ -50,34 +51,52 @@ const StyledHome = styled.main`
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  button {
-    background: black;
-    margin: 10px;
-    border: none;
-    border-radius: 8px;
+
+  .signup,
+  .signin {
+    padding: 10px;
+    color: white;
+    margin: 5px;
+    background-color: black;
     width: 300px;
+    text-align: center;
+    border-radius: 5px;
   }
-  button: hover {
-    background-color: gainsboro;
+
+  .signup: hover {
+    background-color: white;
     color: black;
     transition: all 0.5s ease;
   }
+  .signin: hover {
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease;
+  }
+
   h1 {
     color: white;
     margin-bottom: 20px;
   }
 `;
 
-function Home() {
+function Home({ isHidden }) {
   return (
-    <StyledHome>
+    <StyledHome isHidden={isHidden}>
       <div className="logo_container">
-        <h1>Movie Trivia</h1>
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
+        <h1>Movie Trivia</h1>
         <div className="button_container">
-          <button><Link to = "/register"> Sign Up </Link></button>
-          <button><Link to = "/login"> Already a user? </Link></button>
+
+          <Link to="/register" className="signup">
+            Sign Up
+          </Link>
+          <Link to="/signin" className="signin">
+            Already a user?
+          </Link>
         </div>
       </div>
     </StyledHome>
