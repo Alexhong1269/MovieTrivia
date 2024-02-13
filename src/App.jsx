@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Navbar isHidden={isHidden} toggleVisibility={toggleVisibility} />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home isHidden={isHidden} />} />
           <Route path = "/register" element={<Register />}/>
           <Route path = "/login" element={<Login />}/>
         </Routes>
