@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
+import Login from "./components/Login";
 import "./App.css";
 
 const StyledApp = styled.div``;
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path = "/register" element={<Register />}/>
+          <Route path = "/login" element={<Login />}/>
         </Routes>
       </BrowserRouter>
     </StyledApp>

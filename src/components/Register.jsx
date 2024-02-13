@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
+import { Link } from "react-router-dom";
 
 const StyledRegister = styled.main`
   box-sizing: border-box;
@@ -73,17 +74,17 @@ function Register() {
             <div>
                 <label htmlFor = "username" id = "UserText">Enter a Username:</label>
                 <br></br>
-                <input type = "text" id = "username" name = "username" />
+                <input type = "text" id = "username" name = "username" required />
             </div>
             <div>
                 <label htmlFor = "password" id = "PasswordText">Enter a Password:</label>
                 <br></br>
-                <input type = "text" id = "password" name = "password" />
+                <input type = "text" id = "password" name = "password"  required/>
             </div>
             <div className="button_container">
                 <button>Create Account</button>
             </div>
-            <p className = "MemberText" >Already A Member?</p>
+            <p className = "MemberText" ><Link to = "/login"> Already A Member? </Link></p>
           </form>
         </div>
       </StyledRegister>

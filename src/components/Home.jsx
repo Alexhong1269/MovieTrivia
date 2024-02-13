@@ -77,7 +77,7 @@ function Home() {
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <div className="button_container">
           <button><Link to = "/register"> Sign Up </Link></button>
-          <button>Already a user?</button>
+          <button><Link to = "/login"> Already a user? </Link></button>
         </div>
       </div>
     </StyledHome>
