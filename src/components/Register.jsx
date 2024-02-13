@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
+import { Link } from "react-router-dom";
 
 const StyledRegister = styled.main`
   box-sizing: border-box;
@@ -68,30 +69,26 @@ function Register() {
     <StyledRegister>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
-        <h1>Movie Trivia</h1>
-        <form>
-          <div>
-            <label htmlFor="username" id="UserText">
-              Enter a Username:
-            </label>
-            <br></br>
-            <input type="text" id="username" name="username" />
-          </div>
-          <div>
-            <label htmlFor="password" id="PasswordText">
-              Enter a Password:
-            </label>
-            <br></br>
-            <input type="text" id="password" name="password" required />
-          </div>
-          <div className="button_container">
-            <button>Create Account</button>
-          </div>
-          <p className="MemberText">Already A Member?</p>
-        </form>
-      </div>
-    </StyledRegister>
-  );
+          <h1>Movie Trivia</h1>
+          <form>
+            <div>
+                <label htmlFor = "username" id = "UserText">Enter a Username:</label>
+                <br></br>
+                <input type = "text" id = "username" name = "username" required />
+            </div>
+            <div>
+                <label htmlFor = "password" id = "PasswordText">Enter a Password:</label>
+                <br></br>
+                <input type = "text" id = "password" name = "password"  required/>
+            </div>
+            <div className="button_container">
+                <button>Create Account</button>
+            </div>
+            <p className = "MemberText" ><Link to = "/login"> Already A Member? </Link></p>
+          </form>
+        </div>
+      </StyledRegister>
+    );
 }
 
 export default Register;

@@ -90,6 +90,7 @@ function Home({ isHidden }) {
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <h1>Movie Trivia</h1>
         <div className="button_container">
+
           <Link to="/register" className="signup">
             Sign Up
           </Link>
