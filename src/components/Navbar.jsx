@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import styled from "styled-components";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import Nav from "react-bootstrap/Nav";
@@ -31,9 +32,43 @@ const StyledNavbar = styled.nav`
     -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
   }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 999;
+  }
+
+  .modal-content {
+    position: absolute;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: black;
+    text-align: center;
+    display: flex;
+    z-index: 999;
+  }
+  .modal-content button {
+    margin: 0 auto;
+    width: 200px;
+  }
+  .modal.hidden {
+    display: block;
+  }
 `;
 
-function NavBar() {
+function NavBar({ isHidden, toggleVisibility }) {
   return (
     <StyledNavbar>
       <Nav className="nav">
@@ -43,7 +78,7 @@ function NavBar() {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/howtoplay" className="link">
+          <Nav.Link className="link" onClick={toggleVisibility}>
             How to play
           </Nav.Link>
         </Nav.Item>
@@ -58,6 +93,12 @@ function NavBar() {
           </Nav.Link>
         </Nav.Item>
       </Nav>
+      <div className={`modal ${isHidden ? "hidden" : ""}`}>
+        <div className="modal-content">
+          <p>How to play</p>
+          <button onClick={toggleVisibility}>Understood</button>
+        </div>
+      </div>
     </StyledNavbar>
   );
 }
