@@ -110,7 +110,7 @@ function Login({ isHidden }) {
     <StyledLogin isHidden={isHidden}>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
-        <h1>Movie Trivia</h1>
+        <h1>Sign In</h1>
         <form>
           <div>
             <label htmlFor="username" id="UserText">
