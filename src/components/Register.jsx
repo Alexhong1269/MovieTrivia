@@ -124,7 +124,7 @@ function Register({ isHidden }) {
             </label>
             <br></br>
             <input
-              type="text"
+              type="password"
               id="password"
               name="password"
               placeholder="Please enter password"
