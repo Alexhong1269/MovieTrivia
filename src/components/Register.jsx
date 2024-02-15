@@ -52,15 +52,48 @@ const StyledRegister = styled.main`
     margin-bottom: 20px;
   }
 
-  .button_container {
-    margin-top: 30px;
+  form {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
   }
 
-  .MemberText {
-    text-align: center;
-    margin-top: 40px;
+  form input {
+    width: 300px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: black;
+    border: 1px dotted gray;
+    margin: 5px;
+  }
+
+  .button_container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  button {
+    width: 300px;
+  }
+
+  button: hover {
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease;
+    border: none;
+  }
+
+  .member {
+    margin-top: 10px;
+    background-image: linear-gradient(45deg, #f3ec78, crimson);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
   }
 `;
 
@@ -69,26 +102,44 @@ function Register() {
     <StyledRegister>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
-          <h1>Movie Trivia</h1>
-          <form>
-            <div>
-                <label htmlFor = "username" id = "UserText">Enter a Username:</label>
-                <br></br>
-                <input type = "text" id = "username" name = "username" required />
-            </div>
-            <div>
-                <label htmlFor = "password" id = "PasswordText">Enter a Password:</label>
-                <br></br>
-                <input type = "text" id = "password" name = "password"  required/>
-            </div>
-            <div className="button_container">
-                <button>Create Account</button>
-            </div>
-            <p className = "MemberText" ><Link to = "/login"> Already A Member? </Link></p>
-          </form>
-        </div>
-      </StyledRegister>
-    );
+        <h1>Movie Trivia</h1>
+        <form>
+          <div className="username_input">
+            <label htmlFor="username" id="UserText">
+              Username:
+            </label>
+            <br></br>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Please enter username"
+              required
+            />
+          </div>
+          <div className="password_input">
+            <label htmlFor="password" id="PasswordText">
+              Password:
+            </label>
+            <br></br>
+            <input
+              type="text"
+              id="password"
+              name="password"
+              placeholder="Please enter password"
+              required
+            />
+          </div>
+          <div className="button_container">
+            <button>Create Account</button>
+            <Link to="/login" className="member">
+              Already A Member?
+            </Link>
+          </div>
+        </form>
+      </div>
+    </StyledRegister>
+  );
 }
 
 export default Register;
