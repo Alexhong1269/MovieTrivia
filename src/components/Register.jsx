@@ -33,6 +33,7 @@ const StyledRegister = styled.main`
     width: 250px;
     height: 250px;
     animation: spin 10s infinite;
+    z-index: ${(props) => (props.isHidden ? "-1" : "0")};
   }
 
   @keyframes spin {
@@ -97,9 +98,9 @@ const StyledRegister = styled.main`
   }
 `;
 
-function Register() {
+function Register({ isHidden }) {
   return (
-    <StyledRegister>
+    <StyledRegister isHidden={isHidden}>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <h1>Movie Trivia</h1>
