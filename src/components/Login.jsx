@@ -30,8 +30,8 @@ const StyledLogin = styled.main`
   }
 
   .triviaLogo {
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
     animation: spin 10s infinite;
     z-index: ${(props) => (props.isHidden ? "-1" : "0")};
   }
