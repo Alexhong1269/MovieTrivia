@@ -94,6 +94,10 @@ function NavBar({ isHidden, toggleVisibility }) {
       <div className={`modal ${isHidden ? "hidden" : ""}`}>
         <div className="modal-content">
           <p>How to play</p>
+          <p>1. Pick any category on the Game Board</p>
+          <p>2. Pick the amount of points you want to win</p>
+          <p>(The higher the value the harder the question)</p>
+          <p>3. Win as many points as possible and make it on our Leaderboard</p>
           <button onClick={toggleVisibility}>Understood</button>
         </div>
       </div>
