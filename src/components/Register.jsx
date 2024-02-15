@@ -3,6 +3,7 @@ import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import { Link } from "react-router-dom";
+import { useState } from 'react';
 
 const StyledRegister = styled.main`
   box-sizing: border-box;
@@ -65,24 +66,49 @@ const StyledRegister = styled.main`
 `;
 
 function Register() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    
+    try {
+      const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+  
+      if (response.ok) {
+        // Redirect or show success message
+      } else {
+        console.error('Registration failed.');
+      }
+    } catch (error) {
+      console.error('Error registering:', error);
+    }
+  };
+
   return (
     <StyledRegister>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
           <h1>Movie Trivia</h1>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div>
                 <label htmlFor = "username" id = "UserText">Enter a Username:</label>
                 <br></br>
-                <input type = "text" id = "username" name = "username" required />
+                <input type = "text" id = "username" name = "username" required value={username} onChange={(e) => setUsername(e.target.value)}/>
             </div>
             <div>
                 <label htmlFor = "password" id = "PasswordText">Enter a Password:</label>
                 <br></br>
-                <input type = "text" id = "password" name = "password"  required/>
+                <input type = "text" id = "password" name = "password"  required value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <div className="button_container">
-                <button>Create Account</button>
+                <button type="submit">Create Account</button>
             </div>
             <p className = "MemberText" ><Link to = "/login"> Already A Member? </Link></p>
           </form>
