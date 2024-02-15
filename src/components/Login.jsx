@@ -96,6 +96,13 @@ const StyledLogin = styled.main`
     -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
   }
+  .member:hover {
+    background-image: linear-gradient(45deg, gainsboro, #f3ec78);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+  }
 `;
 
 function Login({ isHidden }) {
