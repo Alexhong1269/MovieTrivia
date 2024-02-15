@@ -32,16 +32,13 @@ const StyledRegister = styled.main`
   .triviaLogo {
     width: 150px;
     height: 150px;
-    animation: spin 10s infinite;
+    animation: spin 5s infinite linear;
     z-index: ${(props) => (props.isHidden ? "-1" : "0")};
   }
 
   @keyframes spin {
     0% {
       transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(180deg);
     }
     100% {
       transform: rotate(360deg);
