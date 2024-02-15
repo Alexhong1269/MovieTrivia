@@ -33,6 +33,7 @@ const StyledLogin = styled.main`
     width: 250px;
     height: 250px;
     animation: spin 10s infinite;
+    z-index: ${(props) => (props.isHidden ? "-1" : "0")};
   }
 
   @keyframes spin {
@@ -97,9 +98,9 @@ const StyledLogin = styled.main`
   }
 `;
 
-function Login() {
+function Login({ isHidden }) {
   return (
-    <StyledLogin>
+    <StyledLogin isHidden={isHidden}>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <h1>Movie Trivia</h1>

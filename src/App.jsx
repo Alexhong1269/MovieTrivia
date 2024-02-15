@@ -21,8 +21,8 @@ function App() {
         <Navbar isHidden={isHidden} toggleVisibility={toggleVisibility} />
         <Routes>
           <Route exact path="/" element={<Home isHidden={isHidden} />} />
-          <Route path = "/register" element={<Register />}/>
-          <Route path = "/login" element={<Login />}/>
+          <Route path="/register" element={<Register isHidden={isHidden} />} />
+          <Route path="/login" element={<Login isHidden={isHidden} />} />
         </Routes>
       </BrowserRouter>
     </StyledApp>
