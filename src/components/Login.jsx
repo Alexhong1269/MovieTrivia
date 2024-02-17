@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import { Link } from "react-router-dom";
+import Validation from "./LoginValidation";
 
 const StyledLogin = styled.main`
   box-sizing: border-box;
@@ -100,15 +101,36 @@ const StyledLogin = styled.main`
     -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
   }
+
+  .error_message {
+    color: red;
+    margin: 0;
+  }
 `;
 
 function Login({ isHidden }) {
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleInput = (e) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors(Validation(values));
+  };
+
   return (
     <StyledLogin isHidden={isHidden}>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <h1>Sign In</h1>
-        <form>
+        <form action="" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username" id="UserText">
               Username:
@@ -120,7 +142,11 @@ function Login({ isHidden }) {
               name="username"
               placeholder="Please enter username"
               required
+              onChange={handleInput}
             />
+            {errors.username && (
+              <p className="error_message">{errors.username}</p>
+            )}
           </div>
           <div>
             <label htmlFor="password" id="PasswordText">
@@ -133,10 +159,14 @@ function Login({ isHidden }) {
               name="password"
               placeholder="Please enter password"
               required
+              onChange={handleInput}
             />
+            {errors.password && (
+              <p className="error_message">{errors.password}</p>
+            )}
           </div>
           <div className="button_container">
-            <button>Sign In</button>
+            <button type="submit">Sign In</button>
             <Link to="/register" className="member">
               Does not have an account?
             </Link>

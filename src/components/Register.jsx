@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import { Link } from "react-router-dom";
+import Validation from "./RegisterValidation";
 
 const StyledRegister = styled.main`
   box-sizing: border-box;
@@ -104,12 +105,28 @@ const StyledRegister = styled.main`
 `;
 
 function Register({ isHidden }) {
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleInput = (e) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors(Validation(values));
+  };
+
   return (
     <StyledRegister isHidden={isHidden}>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <h1>Sign Up</h1>
-        <form>
+        <form action="" onSubmit={handleSubmit}>
           <div className="username_input">
             <label htmlFor="username" id="UserText">
               Username:
@@ -121,7 +138,11 @@ function Register({ isHidden }) {
               name="username"
               placeholder="Please enter username"
               required
+              onChange={handleInput}
             />
+            {errors.username && (
+              <p className="error_message">{errors.username}</p>
+            )}
           </div>
           <div className="password_input">
             <label htmlFor="password" id="PasswordText">
@@ -134,10 +155,14 @@ function Register({ isHidden }) {
               name="password"
               placeholder="Please enter password"
               required
+              onChange={handleInput}
             />
+            {errors.password && (
+              <p className="error_message">{errors.password}</p>
+            )}
           </div>
           <div className="button_container">
-            <button>Create Account</button>
+            <button type="submit">Create Account</button>
             <Link to="/login" className="member">
               Already A Member?
             </Link>
