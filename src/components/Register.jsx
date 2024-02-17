@@ -4,6 +4,7 @@ import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import { Link } from "react-router-dom";
 import Validation from "./RegisterValidation";
+import axios from "axios";
 
 const StyledRegister = styled.main`
   box-sizing: border-box;
@@ -119,6 +120,12 @@ function Register({ isHidden }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(Validation(values));
+    if (errors.username === "" && errors.password === "") {
+      axios
+        .post("https://localhost:3000/register", values)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -164,7 +171,7 @@ function Register({ isHidden }) {
           <div className="button_container">
             <button type="submit">Create Account</button>
             <Link to="/login" className="member">
-              Already A Member?
+              Already a user?
             </Link>
           </div>
         </form>
