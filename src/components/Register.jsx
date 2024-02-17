@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import Validation from "./RegisterValidation";
+import axios from "axios";
 
 const StyledRegister = styled.main`
   box-sizing: border-box;
@@ -31,17 +32,15 @@ const StyledRegister = styled.main`
   }
 
   .triviaLogo {
-    width: 250px;
-    height: 250px;
-    animation: spin 10s infinite;
+    width: 150px;
+    height: 150px;
+    animation: spin 5s infinite linear;
+    z-index: ${(props) => (props.isHidden ? "-1" : "0")};
   }
 
   @keyframes spin {
     0% {
       transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(180deg);
     }
     100% {
       transform: rotate(360deg);
@@ -53,68 +52,132 @@ const StyledRegister = styled.main`
     margin-bottom: 20px;
   }
 
-  .button_container {
-    margin-top: 30px;
+  form {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
   }
 
-  .MemberText {
-    text-align: center;
-    margin-top: 40px;
+  form input {
+    width: 300px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: black;
+    border: 1px dotted gray;
+    margin: 5px;
+  }
+
+  .button_container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  button {
+    width: 300px;
+  }
+
+  button: hover {
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease;
+    border: none;
+  }
+
+  .member {
+    margin-top: 10px;
+    background-image: linear-gradient(45deg, #f3ec78, crimson);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+  }
+
+  .member:hover {
+    background-image: linear-gradient(45deg, gainsboro, #f3ec78);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
   }
 `;
 
-function Register() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+function Register({ isHidden }) {
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    
-    try {
-      const response = await fetch('/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
-  
-      if (response.ok) {
-        // Redirect or show success message
-      } else {
-        console.error('Registration failed.');
-      }
-    } catch (error) {
-      console.error('Error registering:', error);
+  const [errors, setErrors] = useState({});
+
+  const handleInput = (e) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors(Validation(values));
+    if (errors.username === "" && errors.password === "") {
+      axios
+        .post("https://localhost:3000/register", values)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     }
   };
 
   return (
-    <StyledRegister>
+    <StyledRegister isHidden={isHidden}>
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
-          <h1>Movie Trivia</h1>
-          <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor = "username" id = "UserText">Enter a Username:</label>
-                <br></br>
-                <input type = "text" id = "username" name = "username" required value={username} onChange={(e) => setUsername(e.target.value)}/>
-            </div>
-            <div>
-                <label htmlFor = "password" id = "PasswordText">Enter a Password:</label>
-                <br></br>
-                <input type = "text" id = "password" name = "password"  required value={password} onChange={(e) => setPassword(e.target.value)}/>
-            </div>
-            <div className="button_container">
-                <button type="submit">Create Account</button>
-            </div>
-            <p className = "MemberText" ><Link to = "/login"> Already A Member? </Link></p>
-          </form>
-        </div>
-      </StyledRegister>
-    );
+        <h1>Sign Up</h1>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="username_input">
+            <label htmlFor="username" id="UserText">
+              Username:
+            </label>
+            <br></br>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Please enter username"
+              required
+              onChange={handleInput}
+            />
+            {errors.username && (
+              <p className="error_message">{errors.username}</p>
+            )}
+          </div>
+          <div className="password_input">
+            <label htmlFor="password" id="PasswordText">
+              Password:
+            </label>
+            <br></br>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Please enter password"
+              required
+              onChange={handleInput}
+            />
+            {errors.password && (
+              <p className="error_message">{errors.password}</p>
+            )}
+          </div>
+          <div className="button_container">
+            <button type="submit">Create Account</button>
+            <Link to="/login" className="member">
+              Already a user?
+            </Link>
+          </div>
+        </form>
+      </div>
+    </StyledRegister>
+  );
 }
 
 export default Register;

@@ -29,18 +29,15 @@ const StyledHome = styled.main`
   }
 
   .triviaLogo {
-    width: 250px;
-    height: 250px;
-    animation: spin 10s infinite;
+    width: 170px;
+    height: 170px;
+    animation: spin 5s infinite linear;
     z-index: ${(props) => (props.isHidden ? "-1" : "0")};
   }
 
   @keyframes spin {
     0% {
       transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(180deg);
     }
     100% {
       transform: rotate(360deg);
@@ -90,7 +87,6 @@ function Home({ isHidden }) {
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <h1>Movie Trivia</h1>
         <div className="button_container">
-
           <Link to="/register" className="signup">
             Sign Up
           </Link>
