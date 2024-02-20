@@ -1,7 +1,9 @@
-import express from "express";
-import sql from "mssql";
+const express = require("express");
+const sql = require("mssql");
+const cors = require("cors");
 
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 
 const config = {
@@ -14,6 +16,7 @@ const config = {
   },
 };
 
+app.use(cors());
 app.use(express.json());
 
 app.post("/register", async (req, res) => {
