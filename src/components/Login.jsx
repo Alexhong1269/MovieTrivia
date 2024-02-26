@@ -65,6 +65,8 @@ const StyledLogin = styled.main`
     background-color: black;
     border: 1px dotted gray;
     margin: 5px;
+    color: white;
+    outline: none;
   }
 
   .button_container {
@@ -77,6 +79,8 @@ const StyledLogin = styled.main`
 
   button {
     width: 300px;
+    color: white;
+    background-color: black;
   }
 
   button: hover {

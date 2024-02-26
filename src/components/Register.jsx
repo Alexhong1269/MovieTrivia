@@ -71,6 +71,8 @@ const StyledRegister = styled.main`
     background-color: black;
     border: 1px dotted gray;
     margin: 5px;
+    color: white;
+    outline: none;
   }
 
   .button_container {
@@ -85,6 +87,7 @@ const StyledRegister = styled.main`
     width: 300px;
     border: none;
     background-color: black;
+    color: white;
   }
 
   button: hover {
