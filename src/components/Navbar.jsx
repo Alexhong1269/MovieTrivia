@@ -3,6 +3,8 @@ import styled from "styled-components";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import Nav from "react-bootstrap/Nav";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom"; 
+
 
 const StyledNavbar = styled.nav`
   top: 0;
@@ -87,7 +89,9 @@ function NavBar({ isHidden, toggleVisibility }) {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/aboutus" className="link">
+            <Link to="/gameboard">
             About Us
+            </Link>
           </Nav.Link>
         </Nav.Item>
       </Nav>
