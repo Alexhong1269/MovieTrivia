@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import { Link } from "react-router-dom";
-import Validation from "./LoginValidation";
 
 const StyledLogin = styled.main`
   box-sizing: border-box;
@@ -113,12 +112,21 @@ const StyledLogin = styled.main`
 `;
 
 function Login({ isHidden }) {
-  const [values, setValues] = useState({
-    username: "",
-    password: "",
-  });
+  const userRef = useRef();
+  const errRef = useRef();
 
-  const [errors, setErrors] = useState({});
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, pwd]);
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
@@ -134,6 +142,13 @@ function Login({ isHidden }) {
       <div className="logo_container">
         <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
         <h1>Sign In</h1>
+        <p
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
         <form action="" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="username" id="UserText">
@@ -144,13 +159,13 @@ function Login({ isHidden }) {
               type="text"
               id="username"
               name="username"
+              ref={userRef}
+              autoComplete="off"
               placeholder="Please enter username"
               required
-              onChange={handleInput}
+              onChange={(e) => setUser(e.target.value)}
+              value={user}
             />
-            {errors.username && (
-              <p className="error_message">{errors.username}</p>
-            )}
           </div>
           <div>
             <label htmlFor="password" id="PasswordText">
@@ -163,11 +178,9 @@ function Login({ isHidden }) {
               name="password"
               placeholder="Please enter password"
               required
-              onChange={handleInput}
+              onChange={(e) => setPwd(e.target.value)}
+              value={pwd}
             />
-            {errors.password && (
-              <p className="error_message">{errors.password}</p>
-            )}
           </div>
           <div className="button_container">
             <button type="submit">Sign In</button>
