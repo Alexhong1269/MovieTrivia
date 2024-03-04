@@ -1,4 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import AuthContext from "./AuthProvider";
+import axios from "../api/axios";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
@@ -109,9 +111,21 @@ const StyledLogin = styled.main`
     color: red;
     margin: 0;
   }
+
+  .login-success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    weight: 100vw;
+  }
 `;
 
+const LOGIN_URL = "/auth";
+
 function Login({ isHidden }) {
+  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -128,69 +142,106 @@ function Login({ isHidden }) {
     setErrMsg("");
   }, [user, pwd]);
 
-  const handleInput = (e) => {
-    setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
+
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ username: user, password: pwd }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      setAuth({ user, pwd, roles, accessToken });
+      setUser("");
+      setPwd("");
+      setSuccess(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthroized");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      errRef.current.focus();
+    }
   };
 
   return (
-    <StyledLogin isHidden={isHidden}>
-      <div className="logo_container">
-        <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
-        <h1>Sign In</h1>
-        <p
-          ref={errRef}
-          className={errMsg ? "errmsg" : "offscreen"}
-          aria-live="assertive"
-        >
-          {errMsg}
-        </p>
-        <form action="" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="username" id="UserText">
-              Username:
-            </label>
-            <br></br>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              ref={userRef}
-              autoComplete="off"
-              placeholder="Please enter username"
-              required
-              onChange={(e) => setUser(e.target.value)}
-              value={user}
-            />
-          </div>
-          <div>
-            <label htmlFor="password" id="PasswordText">
-              Password:
-            </label>
-            <br></br>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Please enter password"
-              required
-              onChange={(e) => setPwd(e.target.value)}
-              value={pwd}
-            />
-          </div>
-          <div className="button_container">
-            <button type="submit">Sign In</button>
-            <Link to="/register" className="member">
-              Does not have an account?
+    <>
+      {success ? (
+        <StyledLogin isHidden={isHidden}>
+          <div className="login-success">
+            <h1>Welcome!</h1>
+            <Link to="/game" className="member">
+              Start Game
             </Link>
           </div>
-        </form>
-      </div>
-    </StyledLogin>
+        </StyledLogin>
+      ) : (
+        <StyledLogin isHidden={isHidden}>
+          <div className="logo_container">
+            <img src={triviaLogo} className="triviaLogo" alt="trivia_logo" />
+            <h1>Sign In</h1>
+            <p
+              ref={errRef}
+              className={errMsg ? "errmsg" : "offscreen"}
+              aria-live="assertive"
+            >
+              {errMsg}
+            </p>
+            <form action="" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="username" id="UserText">
+                  Username:
+                </label>
+                <br></br>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  ref={userRef}
+                  autoComplete="off"
+                  placeholder="Please enter username"
+                  required
+                  onChange={(e) => setUser(e.target.value)}
+                  value={user}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" id="PasswordText">
+                  Password:
+                </label>
+                <br></br>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="Please enter password"
+                  required
+                  onChange={(e) => setPwd(e.target.value)}
+                  value={pwd}
+                />
+              </div>
+              <div className="button_container">
+                <button type="submit">Sign In</button>
+                <Link to="/register" className="member">
+                  Does not have an account?
+                </Link>
+              </div>
+            </form>
+          </div>
+        </StyledLogin>
+      )}
+    </>
   );
 }
 

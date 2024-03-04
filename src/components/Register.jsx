@@ -166,7 +166,6 @@ const StyledRegister = styled.main`
     align-items: center;
     height: 100vh;
     weight: 100vw;
-    z-index: 999;
   }
 `;
 
