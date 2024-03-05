@@ -158,6 +158,18 @@ const StyledRegister = styled.main`
   .line {
     display: inline-block;
   }
+
+  .register-success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    weight: 100vw;
+  }
+  .register-success-member {
+    font-size: 1.2rem;
+  }
 `;
 
 // must start with a lower or an uppercase letter and it must be followed by anywehre from 3 to 23 characters that can be lower or uppercase, digits, or -, _
@@ -248,12 +260,14 @@ function Register({ isHidden }) {
   return (
     <>
       {success ? (
-        <section>
-          <h1>Success!</h1>
-          <p>
-            <a href="/login">Sign In</a>
-          </p>
-        </section>
+        <StyledRegister isHidden={isHidden}>
+          <div className="register-success">
+            <h1>Successfully registered!</h1>
+            <Link to="/login" className="register-success-member member">
+              Sign In
+            </Link>
+          </div>
+        </StyledRegister>
       ) : (
         <StyledRegister isHidden={isHidden}>
           <div className="logo_container">
