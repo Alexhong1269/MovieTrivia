@@ -167,6 +167,9 @@ const StyledRegister = styled.main`
     height: 100vh;
     weight: 100vw;
   }
+  .register-success-member {
+    font-size: 1.2rem;
+  }
 `;
 
 // must start with a lower or an uppercase letter and it must be followed by anywehre from 3 to 23 characters that can be lower or uppercase, digits, or -, _
@@ -260,7 +263,7 @@ function Register({ isHidden }) {
         <StyledRegister isHidden={isHidden}>
           <div className="register-success">
             <h1>Successfully registered!</h1>
-            <Link to="/login" className="member">
+            <Link to="/login" className="register-success-member member">
               Sign In
             </Link>
           </div>
