@@ -177,7 +177,7 @@ function NavBar({ isHidden, toggleVisibility }) {
             </p>
           </div>
           <p onClick={toggleVisibility} className="ok">
-            Understood
+            Ok
           </p>
         </div>
       </div>
