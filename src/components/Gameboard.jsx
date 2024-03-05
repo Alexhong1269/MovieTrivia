@@ -147,4 +147,6 @@ const Gameboard = () => {
     );
 };
 
+//I wish u the best wook
+
 export default Gameboard;
