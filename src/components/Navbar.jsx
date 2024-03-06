@@ -54,7 +54,7 @@ const StyledNavbar = styled.nav`
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: black;
-    border: 1px dotted white;
+    border: 1px solid white;
     color: white;
     padding: 5px;
     border-radius: 7px;
@@ -96,23 +96,20 @@ const StyledNavbar = styled.nav`
   }
 
   .ok {
-    font-size: 20px;
-    border: 1px dotted white;
-    outline: none;
     padding: 10px;
-    background-image: linear-gradient(45deg, #f3ec78, crimson);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
+    color: white;
+    margin: 5px;
+    background-color: black;
+    width: 300px;
+    text-align: center;
+    border: 1px dotted white;
+    border-radius: 5px;
   }
 
-  .ok:hover {
-    background-image: linear-gradient(45deg, gainsboro, #f3ec78);
-    -webkit-background-clip: text;
-    -moz-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -moz-text-fill-color: transparent;
+  .ok: hover {
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease;
     cursor: pointer;
   }
 
@@ -148,7 +145,7 @@ function NavBar({ isHidden, toggleVisibility }) {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/aboutus" className="link">
-            <Link to="/gameboard">About Us</Link>
+            <Link to="/">About Us</Link>
           </Nav.Link>
         </Nav.Item>
       </Nav>
@@ -178,9 +175,9 @@ function NavBar({ isHidden, toggleVisibility }) {
               Win as many points as possible and make it on our Leaderboard!
             </p>
           </div>
-          <p onClick={toggleVisibility} className="ok">
+          <buttonp onClick={toggleVisibility} className="ok">
             Understood
-          </p>
+          </buttonp>
         </div>
       </div>
     </StyledNavbar>
