@@ -4,8 +4,7 @@ import triviaLogo from "../images/movie_trivia_logo.png";
 import Nav from "react-bootstrap/Nav";
 import { RiMovie2Line } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom"; 
-
+import { Link } from "react-router-dom";
 
 const StyledNavbar = styled.nav`
   top: 0;
@@ -97,8 +96,9 @@ const StyledNavbar = styled.nav`
   }
 
   .ok {
-    outline: none;
+    font-size: 20px;
     border: 1px dotted white;
+    outline: none;
     padding: 10px;
     background-image: linear-gradient(45deg, #f3ec78, crimson);
     -webkit-background-clip: text;
@@ -117,14 +117,15 @@ const StyledNavbar = styled.nav`
   }
 
   .movie-icon {
-    color: red;
+    color: yellow;
   }
 
   .instruction_p {
     width: 25%;
     height: 100%;
-    margin: 20px;
-    padding: 20px;
+    padding: 40px;
+    text-align: center;
+    margin: 10px;
   }
 `;
 
@@ -147,36 +148,33 @@ function NavBar({ isHidden, toggleVisibility }) {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/aboutus" className="link">
-            <Link to="/gameboard">
-            About Us
-            </Link>
+            <Link to="/gameboard">About Us</Link>
           </Nav.Link>
         </Nav.Item>
       </Nav>
       <div className={`modal ${isHidden ? "hidden" : ""}`}>
         <div className="modal-content">
           <h1>HOW TO PLAY</h1>
-          <p>please sign in with your account</p>
           <p>
-            Not a user? <a href="/register">click here</a>
+            NOT A USER? <a href="/register">CLICK HERE</a>
           </p>
           <div className="instruction">
             <p className="instruction_p">
-              <RiMovie2Line className="movie-icon" /> Select a Category: <br />
+              <RiMovie2Line className="movie-icon" /> SELECT A CATEGORY: <br />
               Choose from a variety of movie-related categories
             </p>
             <p className="instruction_p">
-              <RiMovie2Line className="movie-icon" /> Choose a Question: <br />
+              <RiMovie2Line className="movie-icon" /> CHOOSE A QUESTION: <br />
               Each question is assigned a point vaule based on its difficulty
               level.
             </p>
             <p className="instruction_p">
-              <RiMovie2Line className="movie-icon" /> Earn Points: <br /> If
+              <RiMovie2Line className="movie-icon" /> EARN POINTS: <br /> If
               your answer is correct, you'll earn the points associated with the
               question.
             </p>
             <p className="instruction_p">
-              <RiMovie2Line className="movie-icon" /> Leaderboard: <br />
+              <RiMovie2Line className="movie-icon" /> GET HIGHSCORE: <br />
               Win as many points as possible and make it on our Leaderboard!
             </p>
           </div>

@@ -166,9 +166,10 @@ const StyledRegister = styled.main`
     align-items: center;
     height: 100vh;
     weight: 100vw;
+    font-size: 2rem;
   }
   .register-success-member {
-    font-size: 1.2rem;
+    font-size: 2rem;
   }
 `;
 

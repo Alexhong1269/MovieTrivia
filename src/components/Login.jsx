@@ -107,6 +107,19 @@ const StyledLogin = styled.main`
     -moz-text-fill-color: transparent;
   }
 
+  .errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .offscreen {
+    position: absolute;
+    left: -9999px;
+  }
+
   .error_message {
     color: red;
     margin: 0;
@@ -119,13 +132,22 @@ const StyledLogin = styled.main`
     align-items: center;
     height: 100vh;
     weight: 100vw;
+    font-size: 2rem;
+  }
+
+  .register-success-member {
+    font-size: 2rem;
+  }
+
+  .username_display {
+    color: darkred;
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
   }
 `;
 
-const LOGIN_URL = "/auth";
+const LOGIN_URL = "/login";
 
 function Login({ isHidden }) {
-  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
@@ -133,6 +155,7 @@ function Login({ isHidden }) {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     userRef.current.focus();
@@ -151,18 +174,21 @@ function Login({ isHidden }) {
         JSON.stringify({ username: user, password: pwd }),
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true,
         }
       );
-      console.log(JSON.stringify(response?.data));
-      const accessToken = response?.data?.accessToken;
-      setAuth({ user, pwd, roles, accessToken });
-      setUser("");
-      setPwd("");
-      setSuccess(true);
+      console.log(JSON.stringify(response.data));
+      setUser(response.data.data.Username);
+      setPwd(response.data.data.Pass);
+      setScore(response.data.data.Highscore);
+
+      if (response.data.status === "failure") {
+        setErrMsg("Invalid Username or Password");
+      } else {
+        setSuccess(true);
+      }
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg("Invalid Username or Password");
       } else if (err.response?.status === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 401) {
@@ -179,8 +205,10 @@ function Login({ isHidden }) {
       {success ? (
         <StyledLogin isHidden={isHidden}>
           <div className="login-success">
-            <h1>Welcome!</h1>
-            <Link to="/game" className="member">
+            <h1>
+              Welcome <span className="username_display">{user}</span>
+            </h1>
+            <Link to="/gameboard" className="login-success-member member">
               Start Game
             </Link>
           </div>
