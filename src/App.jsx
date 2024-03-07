@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login";
 import Gameboard from "./components/Gameboard.jsx";
+import Leaderboard from "./components/Leaderboard";
 import "./App.css";
 
 const StyledApp = styled.div``;
@@ -25,6 +26,7 @@ function App() {
           <Route path="/register" element={<Register isHidden={isHidden} />} />
           <Route path="/login" element={<Login isHidden={isHidden} />} />
           <Route path="/gameboard" element={<Gameboard />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
         </Routes>
       </BrowserRouter>
     </StyledApp>

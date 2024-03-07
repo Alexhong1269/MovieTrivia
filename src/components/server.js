@@ -100,3 +100,19 @@ app.get("/gameboard", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+//LEADERBOARD
+app.get("/leaderboard", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    console.log(request);
+    const result = await request.query('SELECT TOP 10 Username, Highscore FROM Users ORDER BY Highscore DESC');
+    console.log(result);
+    res.json({ leaderboard: result.recordset });
+  } catch (err) {
+    console.error("Database query failed: ", err);
+    res.status(500).send("Cannot Connect");
+  }
+});
+

@@ -141,7 +141,7 @@ function NavBar({ isHidden, toggleVisibility }) {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="link">Leaderboard</Nav.Link>
+          <Nav.Link className="link" href="/leaderboard">Leaderboard</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/aboutus" className="link">
