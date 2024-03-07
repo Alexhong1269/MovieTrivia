@@ -106,13 +106,13 @@ app.get("/leaderboard", async (req, res) => {
   try {
     await sql.connect(config);
     const request = new sql.Request();
-    console.log(request);
     const result = await request.query('SELECT TOP 10 Username, Highscore FROM Users ORDER BY Highscore DESC');
-    console.log(result);
+    console.log(result.recordset);
     res.json({ leaderboard: result.recordset });
   } catch (err) {
     console.error("Database query failed: ", err);
     res.status(500).send("Cannot Connect");
   }
 });
+
 
