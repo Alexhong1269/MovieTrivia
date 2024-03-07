@@ -118,6 +118,7 @@ const StyledNavbar = styled.nav`
   }
 
   .instruction_p {
+    font-size: 1.4rem;
     width: 25%;
     height: 100%;
     padding: 40px;
