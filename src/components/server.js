@@ -33,7 +33,7 @@ app.post("/register", async (req, res) => {
 
     const request = new sql.Request();
     const insertQuery = `
-      INSERT INTO Users (Username, Pass, Highscore)
+      INSERT INTO Users (Username, password, Highscore)
       VALUES (@username, @password, 0)
     `;
     request.input("username", sql.NVarChar, username);
@@ -59,7 +59,7 @@ app.post("/login", async (req, res) => {
     const request = new sql.Request();
 
     // Define the SQL query with input parameters for security (to prevent SQL injection)
-    const sqlQuery = `SELECT * FROM Users WHERE Username = @username AND Pass = @password`;
+    const sqlQuery = `SELECT * FROM Users WHERE Username = @username AND password = @password`;
 
     // Add parameters to the request
     request.input("username", sql.NVarChar, req.body.username);
@@ -83,12 +83,14 @@ app.post("/login", async (req, res) => {
 
 // GAMEBOARD
 app.get("/gameboard", async (req, res) => {
-  console.log("hi");
+  console.log("Wook is god");
   try {
     await sql.connect(config);
     const request = new sql.Request();
     console.log(request);
-    const result = await request.query`SELECT * FROM Questions`;
+    const {value, cat} = req.query;
+    const result = await request.query`SELECT Question, Correct Answer, Answer 1, Answer 2, 
+      Answer 3, Answer 4 FROM Questions WHERE Difficulty = ${value} AND Category = ${cat} ORDER BY RANDOM() LIMIT 1`;
     console.log(result);
     console.log(JSON.stringify(result.recordset));
   } catch (err) {
