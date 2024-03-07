@@ -176,9 +176,9 @@ function NavBar({ isHidden, toggleVisibility }) {
               Win as many points as possible and make it on our Leaderboard!
             </p>
           </div>
-          <buttonp onClick={toggleVisibility} className="ok">
+          <button onClick={toggleVisibility} className="ok">
             Understood
-          </buttonp>
+          </button>
         </div>
       </div>
     </StyledNavbar>

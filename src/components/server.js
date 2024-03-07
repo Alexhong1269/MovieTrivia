@@ -33,7 +33,7 @@ app.post("/register", async (req, res) => {
 
     const request = new sql.Request();
     const insertQuery = `
-      INSERT INTO Users (Username, Pass, Highscore)
+      INSERT INTO Users (Username, password, Highscore)
       VALUES (@username, @password, 0)
     `;
     request.input("username", sql.NVarChar, username);
@@ -59,7 +59,7 @@ app.post("/login", async (req, res) => {
     const request = new sql.Request();
 
     // Define the SQL query with input parameters for security (to prevent SQL injection)
-    const sqlQuery = `SELECT * FROM Users WHERE Username = @username AND Pass = @password`;
+    const sqlQuery = `SELECT * FROM Users WHERE Username = @username AND password = @password`;
 
     // Add parameters to the request
     request.input("username", sql.NVarChar, req.body.username);
