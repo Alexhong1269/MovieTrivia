@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login";
-import Gameboard from "./components/Gameboard.jsx";
+import Gameboard from "./components/Gameboard2.jsx";
 import "./App.css";
 
 const StyledApp = styled.div``;

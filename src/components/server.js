@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = 3000;
+const PORT = process.env.REACT_APP_API_BASE_URL || 3000;
 
 const config = {
   user: "acohorst1",
@@ -83,14 +83,12 @@ app.post("/login", async (req, res) => {
 
 // GAMEBOARD
 app.get("/gameboard", async (req, res) => {
-  console.log("hi");
   try {
     await sql.connect(config);
     const request = new sql.Request();
     console.log(request);
-    const result = await request.query`SELECT * FROM Questions`;
-    console.log(result);
-    console.log(JSON.stringify(result.recordset));
+    const result = await sql.query`SELECT * FROM Questions`;
+    res.json(result.recordset);
   } catch (err) {
     console.error("Database query failed: ", err);
     res.status(500).send("Error fetching questions");

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import AuthContext from "./AuthProvider";
 import axios from "../api/axios";
 import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
