@@ -87,6 +87,22 @@ function shuffleArray(array) {
 }
 
 const Modal = ({ isOpen, onClose, question }) => {
+  const handleAnswerClick = (option, question) => {
+    if (
+      option === question["Correct Answer"] &&
+      !answeredQuestions.includes(question.Question)
+    ) {
+      setScore((prevScore) => prevScore + question.Difficulty);
+      setAnsweredQuestions((prevAnswered) => [
+        ...prevAnswered,
+        question.Question,
+      ]);
+      setIsModalOpen(false); // Optionally close the modal after selecting an answer
+    } else {
+      // Handle incorrect answer if needed
+      setIsModalOpen(false); // Optionally close the modal after selecting an answer
+    }
+  };
   if (!isOpen) return null;
 
   let options = [];
@@ -127,11 +143,15 @@ const Modal = ({ isOpen, onClose, question }) => {
       >
         {question.Question}
       </h1>
-      {options.map((option, index) => (
-        <StyledButton key={index} onClick={() => console.log(option)}>
-          {option}
-        </StyledButton>
-      ))}
+      {question &&
+        options.map((option, index) => (
+          <StyledButton
+            key={index}
+            onClick={() => handleAnswerClick(option, question)}
+          >
+            {option}
+          </StyledButton>
+        ))}
       <StyledButton onClick={onClose} style={{ marginTop: "20px" }}>
         Close
       </StyledButton>
@@ -144,6 +164,8 @@ const Gameboard2 = () => {
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [score, setScore] = useState(0);
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -193,7 +215,13 @@ const Gameboard2 = () => {
         return (
           <Card
             key={`${categoryIndex}-${i}`}
-            onClick={() => handleCardClick(question)}
+            onClick={() => question && handleCardClick(question)}
+            style={{
+              opacity: answeredQuestions.includes(question?.Question) ? 0.5 : 1,
+              pointerEvents: answeredQuestions.includes(question?.Question)
+                ? "none"
+                : "all",
+            }}
           >
             ${question ? question.Difficulty : ""}
           </Card>
@@ -210,7 +238,7 @@ const Gameboard2 = () => {
   return (
     <>
       <StyledGameboard>
-        <h2>SCORE: 0</h2>
+        <h2>SCORE: {score}</h2>
         <div className="gameboard">{renderBoard()}</div>
       </StyledGameboard>
       <Modal
