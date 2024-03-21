@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import bgImg from "../images/cinema.jpeg";
+import bgImg from "../images/cinema2.jpeg";
 
 const StyledGameboard = styled.div`
   background: url(${bgImg});
@@ -17,7 +17,8 @@ const StyledGameboard = styled.div`
   height: 100vh;
 
   h2 {
-    color: gold;
+    font-size: 1.6rem;
+    color: khaki;
     align-self: flex-end;
     margin-right: 100px;
   }
@@ -35,8 +36,8 @@ const CategoryCard = styled.div`
   font-weight: bold;
   padding: 5px;
   margin: 5px;
-  font-size: 40px;
-  color: GOLD;
+  font-size: 1.6rem;
+  color: khaki;
 `;
 
 const Card = styled.div`
@@ -47,14 +48,13 @@ const Card = styled.div`
   align-items: center;
   flex: 1;
   margin: 5px;
-  width: 100%;
-  height: 120px;
+  height: 100px;
   border: 1px solid #ccc;
   box-shadow: 6px 2px 2px black;
   text-align: center;
   &:hover {
     background-color: black;
-    color: darkkhaki;
+    color: khaki;
     cursor: pointer;
   }
   font-size: 2rem;
@@ -238,7 +238,7 @@ const Gameboard2 = () => {
   return (
     <>
       <StyledGameboard>
-        <h2>SCORE: {score}</h2>
+        <h2>Score: {score}</h2>
         <div className="gameboard">{renderBoard()}</div>
       </StyledGameboard>
       <Modal

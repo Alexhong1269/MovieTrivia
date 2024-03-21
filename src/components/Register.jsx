@@ -166,7 +166,7 @@ const StyledRegister = styled.main`
     align-items: center;
     height: 100vh;
     weight: 100vw;
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
   .register-success-member {
     font-size: 2rem;
