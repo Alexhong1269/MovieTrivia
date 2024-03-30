@@ -98,3 +98,50 @@ app.get("/gameboard", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// Leaderboard
+app.get("/leaderboard", async (req, res) => {
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const result = await request.query(
+      "SELECT TOP 5 * FROM Users ORDER BY Highscore DESC"
+    );
+    res.json(result.recordset);
+  } catch (err) {
+    console.error("Database query failed: ", err);
+    res.status(500).send("Error fetching leaderboard");
+  }
+});
+
+app.post("/updateHighscore", async (req, res) => {
+  const { username, highscore } = req.body;
+  try {
+    await sql.connect(config);
+    const request = new sql.Request();
+    const updateQuery = `
+    UPDATE Users
+    SET Highscore = @highscore
+    WHERE Username = @username AND Highscore < @highscore`;
+
+    request.input("username", sql.NVarChar, username);
+    request.input("highscore", sql.Int, highscore);
+    const result = await request.query(updateQuery);
+
+    if (result.rowsAffected[0] > 0) {
+      res.json({
+        status: "success",
+        message: "Highscore updated successfully",
+      });
+    } else {
+      res.json({
+        status: "failure",
+        message:
+          "Highscore not updated. It might be lower than current highscore ",
+      });
+    }
+  } catch (error) {
+    console.error("Error updating highscore", error);
+    res.sendStatus(500);
+  }
+});

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import bgImg from "../images/home_bg.jpg";
 import triviaLogo from "../images/movie_trivia_logo.png";
 import { Link } from "react-router-dom";
+import { useUser } from "./userContext";
 
 const StyledLogin = styled.main`
   box-sizing: border-box;
@@ -147,6 +148,7 @@ const StyledLogin = styled.main`
 const LOGIN_URL = "/login";
 
 function Login({ isHidden }) {
+  const { login } = useUser();
   const userRef = useRef();
   const errRef = useRef();
 
@@ -183,6 +185,7 @@ function Login({ isHidden }) {
       if (response.data.status === "failure") {
         setErrMsg("Invalid Username or Password");
       } else {
+        login({ username: user, highscore: score });
         setSuccess(true);
       }
     } catch (err) {

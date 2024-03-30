@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import bgImg from "../images/cinema2.jpeg";
+import { useUser } from "./userContext";
 
 const StyledGameboard = styled.div`
   background: url(${bgImg});
@@ -70,7 +72,8 @@ const StyledButton = styled.button`
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.1s, color 0.1s;
-  height: 70%;
+  height: 140px;
+  width: 400px;
 
   &:hover {
     background-color: black;
@@ -86,23 +89,7 @@ function shuffleArray(array) {
   return array;
 }
 
-const Modal = ({ isOpen, onClose, question }) => {
-  const handleAnswerClick = (option, question) => {
-    if (
-      option === question["Correct Answer"] &&
-      !answeredQuestions.includes(question.Question)
-    ) {
-      setScore((prevScore) => prevScore + question.Difficulty);
-      setAnsweredQuestions((prevAnswered) => [
-        ...prevAnswered,
-        question.Question,
-      ]);
-      setIsModalOpen(false); // Optionally close the modal after selecting an answer
-    } else {
-      // Handle incorrect answer if needed
-      setIsModalOpen(false); // Optionally close the modal after selecting an answer
-    }
-  };
+const Modal = ({ isOpen, onClose, question, handleAnswerClick }) => {
   if (!isOpen) return null;
 
   let options = [];
@@ -117,6 +104,7 @@ const Modal = ({ isOpen, onClose, question }) => {
       ].filter((option, index, self) => self.indexOf(option) === index)
     );
   }
+
   return (
     <div
       style={{
@@ -125,7 +113,7 @@ const Modal = ({ isOpen, onClose, question }) => {
         transform: "translate(-50%, -50%)",
         display: "flex",
         justifyContent: "center",
-        alignItems: "cneter",
+        alignItems: "center",
         flexDirection: "column",
         textAlign: "center",
         width: "100vw",
@@ -136,18 +124,14 @@ const Modal = ({ isOpen, onClose, question }) => {
         zIndex: 1000,
       }}
     >
-      <h1
-        style={{
-          marginBottom: "20px",
-        }}
-      >
-        {question.Question}
-      </h1>
+      <h1 style={{ marginBottom: "20px" }}>{question.Question}</h1>
       {question &&
         options.map((option, index) => (
           <StyledButton
             key={index}
-            onClick={() => handleAnswerClick(option, question)}
+            onClick={() => {
+              handleAnswerClick(option, question);
+            }}
           >
             {option}
           </StyledButton>
@@ -160,12 +144,56 @@ const Modal = ({ isOpen, onClose, question }) => {
 };
 
 const Gameboard2 = () => {
+  const navigate = useNavigate();
+  const { user, updateHighscore } = useUser();
+
   const [questions, setQuestions] = useState([]);
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState([]);
+  const [isGameFinished, setIsGameFinished] = useState(false);
+
+  const redirectToLeaderboard = () => {
+    navigate("/leaderboard");
+  };
+
+  const GameFinishedModal = ({ isOpen, onRestart }) => {
+    if (!isOpen) return null;
+
+    return (
+      <div
+        style={{
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          textAlign: "center",
+          width: "50vw",
+          height: "50vh",
+          backgroundColor: "darkkhaki",
+          position: "fixed",
+          padding: "20px",
+          zIndex: 1000,
+        }}
+      >
+        <h1>Game Finished!</h1>
+        <p>Your score: {score}</p>
+        <StyledButton onClick={onRestart}>Play Again</StyledButton>
+        <StyledButton onClick={redirectToLeaderboard}>Leaderboard</StyledButton>
+      </div>
+    );
+  };
+
+  const restartGame = () => {
+    setIsGameFinished(false);
+    setScore(0);
+    setAnsweredQuestions([]);
+  };
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -174,7 +202,9 @@ const Gameboard2 = () => {
           `${import.meta.env.VITE_BASE_URL}/gameboard`
         );
         setQuestions(res.data);
-        const uniqueCategories = [...new Set(res.data.map((q) => q.Category))];
+        const uniqueCategories = Array.from(
+          new Set(res.data.map((q) => q.Category))
+        );
         setCategories(uniqueCategories.slice(0, 5));
       } catch (error) {
         console.error("Error fetching questions:", error);
@@ -189,11 +219,53 @@ const Gameboard2 = () => {
     setIsModalOpen(true);
   };
 
+  const handleAnswerClick = (option, question) => {
+    if (!answeredQuestions.includes(question.Question)) {
+      if (option === question["Correct Answer"]) {
+        setScore((prevScore) => prevScore + question.Difficulty);
+      }
+      if (answeredQuestions.length + 1 === 25) {
+        console.log("Game should finish");
+        setIsGameFinished(true);
+      }
+      setAnsweredQuestions((prevAnswered) => [
+        ...prevAnswered,
+        question.Question,
+      ]);
+      console.log(`Questions answered: ${answeredQuestions.length + 1}`);
+      console.log(`Total questions: ${questions.length}`);
+      setIsModalOpen(false); // Close the modal after selecting an answer
+    }
+  };
+  useEffect(() => {
+    if (isGameFinished) {
+      checkAndUpdateHighScore();
+    }
+  }, [isGameFinished]);
+
+  const checkAndUpdateHighScore = async () => {
+    if (user && score > user.highscore) {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/updateHighscore`,
+          {
+            username: user.username,
+            highscore: score,
+          }
+        );
+        if (response.status === 200) {
+          updateHighscore(highscore);
+        }
+        console.log(response.data.message);
+      } catch (error) {
+        console.error("Error updating high score", error);
+      }
+    }
+  };
+
   const renderBoard = () => {
-    // Create an array to hold JSX for the category row and question rows
     let boardRows = [];
 
-    // First, add a row for categories
     boardRows.push(
       <FlexRow key="categories">
         {categories.map((category, index) => (
@@ -211,7 +283,6 @@ const Gameboard2 = () => {
           (q) => q.Category === category && q.Difficulty === (i + 1) * 100
         );
 
-        // Use the question's difficulty as the display, and set up a click handler
         return (
           <Card
             key={`${categoryIndex}-${i}`}
@@ -239,13 +310,15 @@ const Gameboard2 = () => {
     <>
       <StyledGameboard>
         <h2>Score: {score}</h2>
-        <div className="gameboard">{renderBoard()}</div>
+        {renderBoard()}
       </StyledGameboard>
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         question={selectedQuestion || {}}
+        handleAnswerClick={handleAnswerClick} // Passing handleAnswerClick function to Modal
       />
+      <GameFinishedModal isOpen={isGameFinished} onRestart={restartGame} />
     </>
   );
 };
