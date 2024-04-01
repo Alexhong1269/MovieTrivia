@@ -147,9 +147,7 @@ function NavBar({ isHidden, toggleVisibility }) {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/aboutus" className="link">
-            <Link to="/">About Us</Link>
-          </Nav.Link>
+          <Nav.Link href="/aboutus" className="link"></Nav.Link>
         </Nav.Item>
       </Nav>
       <div className={`modal ${isHidden ? "hidden" : ""}`}>

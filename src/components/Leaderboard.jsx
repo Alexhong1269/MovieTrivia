@@ -66,10 +66,11 @@ const StyledLeaderboard = styled.main`
     background-color: rgba(0, 0, 0, 0.75);
     width: 500px;
     text-align: center;
-    padding: 10px;
-    margin: 10px auto;
+    padding: 5px;
+    margin: 7px auto;
     border-radius: 10px;
     list-style-type: none;
+    border: 1px dotted white;
   }
 
   ul {

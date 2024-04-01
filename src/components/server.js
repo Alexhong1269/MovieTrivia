@@ -105,7 +105,7 @@ app.get("/leaderboard", async (req, res) => {
     await sql.connect(config);
     const request = new sql.Request();
     const result = await request.query(
-      "SELECT TOP 5 * FROM Users ORDER BY Highscore DESC"
+      "SELECT TOP 10 * FROM Users ORDER BY Highscore DESC"
     );
     res.json(result.recordset);
   } catch (err) {
